@@ -1,29 +1,34 @@
-pipeline{
-  agent{
-    docker{
-      image 'node:14'
+pipeline {
+  agent {
+    docker {
+      image 'node:1a’
     }
   }
   stages {
-    stge('Clone Repository') {
+    stage('Clone repository’) {
       steps {
-        git branch: 'main',
-          url : 'https://github.com/azfar-rayan/PES1UG20CS453_Jenkins.git'
+          git branch: ‘main’,
+          url: "https://github.com/<user>/<repo>.git’
       }
-    }
-    stage('Install Dependencies') {
-      steps {
-        sh 'npm install'
+   }
+   stage('Install dependencies’) {
+    steps {
+      sh 'npm install'
       }
+  }
+    stage('Build application’) {
+    steps {
+      sh "npm run build’
+  }
+}
+  stage('Test application’) {
+    steps {
+      sh "npm test’
     }
-    stage('Build Application') {
-      steps {
-        sh 'npm test'
-      }
-    }
-    stage('Push Docker Image') {
-      steps {
-        sh 'docker build -t azfarrayan/jenkins:PES1UG20CS453 .'
+  }
+   stage('Push Docker image") {
+    steps {
+        sh 'docker build -t azfarrayan/jenkins:PES1UG20CS453 .' 
         sh 'docker push azfarrayan/jenkins:PES1UG20CS453'
       }
     }
